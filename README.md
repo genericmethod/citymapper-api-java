@@ -2,7 +2,7 @@
 This Java module allows you to quickly connect the the Citymapper API.
 Code is generated using Swagger with Retrofit and Gson as supporting libraries.
 
-# Usage
+# Installation
 
 Add the following maven dependency to your pom.xml
 
