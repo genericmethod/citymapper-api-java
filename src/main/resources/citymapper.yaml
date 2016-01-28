@@ -1,0 +1,88 @@
+swagger: '2.0'
+
+info:
+  title: Citymapper API
+  description: Citymapper API
+  version: "1.0.0"
+
+# the domain of the service
+host: developer.citymapper.com
+
+# array of all schemes that your API supports
+schemes:
+  - https
+
+# will be prefixed to all paths
+basePath: /api/1
+
+produces:
+  - application/json
+
+paths:
+  /traveltime/:
+    get:
+      summary: Travel Time
+      description: |
+        Transit travel time between two locations.
+      parameters:
+      - name: startcoord
+        in: query
+        description: The geographical start point of the trip, in WGS84 'latitude,longitude' format.
+        required: true
+        type: string
+      - name: endcoord
+        in: query
+        description: The geographical end point of the trip, in WGS84 'latitude,longitude' format.
+        required: true
+        type: string
+      - name: time
+        in: query
+        description: A date & time in ISO-8601 format, including time zone information. If omitted, the travel time is computed for travel at the time of the request. Results should be most reliable for -1 and +7 days from the current time, but times further in the future should give reasonable times (not accounting for any holiday schedules).
+        required: false
+        type: string
+      - name: time_type
+        in: query
+        description: If 'time' is provided, a 'time_type' must be provided as well. At the moment, the only defined 'time_type' value is 'arrival', which computes the travel time for arriving at the 'endcoord' at the given time.
+        required: false
+        type: string
+      - name: key
+        in: query
+        description: Your API access key
+        required: true
+        type: string
+      tags:
+        - TravelTime
+      responses:
+        200:
+          description: Travel time
+          schema:
+            $ref: '#/definitions/TravelTime'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  TravelTime:
+    properties:
+      travel_time_minutes:
+        type: integer
+        format: int32
+        description: The travel time in minutes from the starting coordinated to the ending coordinates
+      diagnostic:
+        $ref: '#/definitions/Diagnostic'
+  Diagnostic:
+    properties:
+      milliseconds:
+        type: integer
+        format: int32
+        description: Time in milliseconds
+  Error:
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
