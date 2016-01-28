@@ -1,6 +1,13 @@
 # Citymapper Java API Wrapper
-This Java module allows you to quickly connect the the Citymapper API.
-Code is generated using Swagger with Retrofit and Gson as supporting libraries.
+This Java module allows you to quickly connect the the [Citymapper API](http://www.citymapper.com/).
+Code is generated using [Swagger](http://swagger.io/) with [Retrofit](http://square.github.io/retrofit/)
+and [Gson](https://github.com/google/gson) as supporting libraries.
+
+# Citymapper API Description file
+
+The Citymapper API description file is based on the [Open API Specification](https://openapis.org/).
+This description file can be used to generate an API client in a variety of programming languages.
+Please refer to [swagger-codegen](https://github.com/swagger-api/swagger-codegen) to generate client code in other languages.
 
 # Installation
 
@@ -10,7 +17,8 @@ Clone this repo to your local working directory.
 git clone  https://github.com/genericmethod/citymapper-api-java.git
 ```
 
-Install the dependency to your local repo.
+Install the dependency to your local repo. This will use the citymapper.yaml API definition file found
+in the resources folder to generate the API client.
 
 ```
 mvn clean install
