@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Citymapper-api-java by genericmethod</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Citymapper-api-java</h1>
+      <h2 class="project-tagline">Citymapper Java API Wrapper</h2>
+      <a href="https://github.com/genericmethod/citymapper-api-java" class="btn">View on GitHub</a>
+      <a href="https://github.com/genericmethod/citymapper-api-java/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/genericmethod/citymapper-api-java/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="citymapper-java-api-wrapper" class="anchor" href="#citymapper-java-api-wrapper" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Citymapper Java API Wrapper</h1>
+
+<p>This Java module allows you to quickly connect the the <a href="http://www.citymapper.com/">Citymapper API</a>.
+Code is generated using <a href="http://swagger.io/">Swagger</a> with <a href="http://square.github.io/retrofit/">Retrofit</a>
+and <a href="https://github.com/google/gson">Gson</a> as supporting libraries.</p>
+
+<h1>
+<a id="citymapper-api-description-file" class="anchor" href="#citymapper-api-description-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Citymapper API Description file</h1>
+
+<p>The Citymapper API description file is based on the <a href="https://openapis.org/">Open API Specification</a>.
+This description file can be used to generate an API client in a variety of programming languages.
+Please refer to <a href="https://github.com/swagger-api/swagger-codegen">swagger-codegen</a> to generate client code in other languages.</p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>Clone this repo to your local working directory.</p>
+
+<pre><code>git clone  https://github.com/genericmethod/citymapper-api-java.git
+</code></pre>
+
+<p>Install the dependency to your local repo. This will use the citymapper.yaml API definition file found
+in the resources folder to generate the API client.</p>
+
+<pre><code>mvn clean install
+</code></pre>
+
+<p>Add the following maven dependency to your pom.xml</p>
+
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.citymapper.api&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;citymapper-api-java&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.0-SNAPSHOT&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To begin using this library, build a retrofit instance</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Retrofit</span> retrofit <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ApiClient</span>()<span class="pl-k">.</span>getAdapterBuilder()<span class="pl-k">.</span>build();</pre></div>
+
+<p>Create an API instance</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">TravelTimeApi</span> travelTimeApi <span class="pl-k">=</span> retrofit<span class="pl-k">.</span>create(<span class="pl-smi">TravelTimeApi</span><span class="pl-k">.</span>class);</pre></div>
+
+<p>Execute an API call and get the body</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">final</span> <span class="pl-smi">TravelTime</span> time <span class="pl-k">=</span> travelTimeApi<span class="pl-k">.</span>traveltimeGet(<span class="pl-s"><span class="pl-pds">"</span>51.5258156,-0.08833669999999999<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>51.5094,-0.002124<span class="pl-pds">"</span></span>,
+        <span class="pl-c1">null</span>,
+        <span class="pl-c1">null</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>561b831b3b0cb3a98d9bba92397c7a34<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>body();</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/genericmethod/citymapper-api-java">Citymapper-api-java</a> is maintained by <a href="https://github.com/genericmethod">genericmethod</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
