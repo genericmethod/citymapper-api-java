@@ -15,6 +15,12 @@ schemes:
 # will be prefixed to all paths
 basePath: /api/1
 
+securityDefinitions:
+  apikey:
+    type: apiKey
+    name: key
+    in: query
+
 produces:
   - application/json
 
@@ -45,11 +51,8 @@ paths:
         description: If 'time' is provided, a 'time_type' must be provided as well. At the moment, the only defined 'time_type' value is 'arrival', which computes the travel time for arriving at the 'endcoord' at the given time.
         required: false
         type: string
-      - name: key
-        in: query
-        description: Your API access key
-        required: true
-        type: string
+      security:
+        - apikey: []
       tags:
         - TravelTime
       responses:
@@ -61,6 +64,57 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /singlepointcoverage/:
+   get:
+      summary: Singe Point Coverage
+      description: |
+        Determines whether a single point falls within Citymapper's coverage areas. Callers are welcome to cache coverage results, though negative results should not be cached for more than 24 hours to ensure that when new coverage areas are launched by Citymapper, they are quickly reflected in the external app.
+      parameters:
+      - name: coord
+        in: query
+        description: The geographical coordinates of the point to be tested, in WGS84 'latitude,longitude' form
+        required: true
+        type: string
+      security:
+        - apikey: []
+      tags:
+        - Coverage
+      responses:
+        200:
+          description: Point on the map
+          schema:
+            $ref: '#/definitions/Coverage'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /coverage/:
+     post:
+        consumes:
+          - application/json
+        summary: Coverage for multiple points
+        description: |
+          Checks multiple points to see which ones fall within Citymapper's coverage areas. Callers are welcome to cache coverage results, though negative results should not be cached for more than 24 hours to ensure that when new coverage areas are launched by Citymapper, they are quickly reflected in the external app.
+        parameters:
+        - name: body
+          in: body
+          description: The post should contain an application/json body. In this example, 'coord' is an array containing WGS84 latitude and longitude values, and 'id' is an optional ID to be mirrored back in the response for matching with other data from the caller.
+          required: true
+          schema:
+            $ref: '#/definitions/Coverage'
+        security:
+          - apikey: []
+        tags:
+          - Coverage
+        responses:
+          200:
+            description: Point on the map
+            schema:
+              $ref: '#/definitions/Coverage'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
 
 definitions:
   TravelTime:
@@ -77,6 +131,31 @@ definitions:
         type: integer
         format: int32
         description: Time in milliseconds
+  Coverage:
+    properties:
+      points:
+        type: array
+        items:
+          $ref: '#/definitions/Point'
+    example: { "points": [ { "coord": [40.1, -73.0], "id": "test1" }, { "coord": [37.784, -122.402] }, { "coord": [41.84, -73], "id": "test2" }, { "id": "test3" } ] }
+
+  Point:
+    required:
+      - coord
+    properties:
+      covered:
+        type: boolean
+        description: Coverage result
+      coord:
+        type: array
+        items:
+          type: number
+          format: double
+        description: An array containing two values - Longitude and latitude
+      id:
+        type: string
+        description: Point identifier that is bounced back and forth.
+
   Error:
     properties:
       code:

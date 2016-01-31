@@ -9,6 +9,10 @@ The Citymapper API description file is based on the [Open API Specification](htt
 This description file can be used to generate an API client in a variety of programming languages.
 Please refer to [swagger-codegen](https://github.com/swagger-api/swagger-codegen) to generate client code in other languages.
 
+# Citymapper API key
+
+An api key can be obtained by signing up [here](https://citymapper.3scale.net/signup)
+
 # Installation
 
 Clone this repo to your local working directory.
@@ -49,13 +53,56 @@ TravelTimeApi travelTimeApi = retrofit.create(TravelTimeApi.class);
 Execute an API call and get the body
 
 ```java
-final TravelTime time = travelTimeApi.traveltimeGet("51.5258156,-0.08833669999999999",
-        "51.5094,-0.002124",
-        null,
-        null,
-        "561b831b3b0cb3a98d9bba92397c7a34").execute().body();
+    Retrofit retrofit = new ApiClient("apikey", API_KEY).getAdapterBuilder().build();
+    TravelTimeApi travelTimeApi = retrofit.create(TravelTimeApi.class);
+    final TravelTime time = travelTimeApi.traveltimeGet("51.5258156,-0.08833669999999999",
+            "51.5094,-0.002124",
+            null,
+            null).execute().body();
+    assertNotNull(time);
+
 ```
 
+Travel Time API call example:
+```java
+    Retrofit retrofit = new ApiClient("apikey",API_KEY).getAdapterBuilder().build();
+    TravelTimeApi travelTimeApi = retrofit.create(TravelTimeApi.class);
+    final TravelTime time = travelTimeApi.traveltimeGet("51.5258156,-0.08833669999999999",
+            "51.5094,-0.002124",
+            null,
+            null).execute().body();
+
+```
+
+Single Point Coverage API call example:
+
+```java
+    Retrofit retrofit = new ApiClient("apikey", API_KEY).getAdapterBuilder().build();
+    CoverageApi coverageApi = retrofit.create(CoverageApi.class);
+    final Coverage coverage = coverageApi.singlepointcoverageGet("51.5258156,-0.08833669999999999").execute().body();
+```
+
+Multiple Point Coverage API call example:
+
+```java
+    Retrofit retrofit = new ApiClient("apikey",API_KEY).getAdapterBuilder().build();
+    CoverageApi coverageApi = retrofit.create(CoverageApi.class);
+
+    Coverage coverage = new Coverage();
+    List<Point> points = new ArrayList<Point>();
+    Point londonPoint = new Point();
+    londonPoint.setCoord(Arrays.asList(51.5072,0.1275));
+    points.add(londonPoint);
+    Point pyongyangPoint = new Point();
+    pyongyangPoint.setCoord(Arrays.asList(39.0194, 125.7381));
+    pyongyangPoint.setId("Pyongyang");
+    points.add(pyongyangPoint);
+
+    coverage.setPoints(points);
+
+    final Coverage coverageResult = coverageApi.coveragePost(coverage).execute().body();
+
+```
 
 
 
