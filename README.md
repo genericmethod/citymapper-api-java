@@ -33,7 +33,7 @@ Add the following maven dependency to your pom.xml
 <dependency>
     <groupId>com.citymapper.api</groupId>
     <artifactId>citymapper-api-java</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 </dependency>
 ```
 ## Usage
