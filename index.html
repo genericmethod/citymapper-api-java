@@ -34,6 +34,11 @@ This description file can be used to generate an API client in a variety of prog
 Please refer to <a href="https://github.com/swagger-api/swagger-codegen">swagger-codegen</a> to generate client code in other languages.</p>
 
 <h1>
+<a id="citymapper-api-key" class="anchor" href="#citymapper-api-key" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Citymapper API key</h1>
+
+<p>An api key can be obtained by signing up <a href="https://citymapper.3scale.net/signup">here</a></p>
+
+<h1>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>Clone this repo to your local working directory.</p>
@@ -52,7 +57,7 @@ in the resources folder to generate the API client.</p>
 <div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
     &lt;<span class="pl-ent">groupId</span>&gt;com.citymapper.api&lt;/<span class="pl-ent">groupId</span>&gt;
     &lt;<span class="pl-ent">artifactId</span>&gt;citymapper-api-java&lt;/<span class="pl-ent">artifactId</span>&gt;
-    &lt;<span class="pl-ent">version</span>&gt;1.0-SNAPSHOT&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.0&lt;/<span class="pl-ent">version</span>&gt;
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h2>
@@ -68,11 +73,50 @@ in the resources folder to generate the API client.</p>
 
 <p>Execute an API call and get the body</p>
 
-<div class="highlight highlight-source-java"><pre><span class="pl-k">final</span> <span class="pl-smi">TravelTime</span> time <span class="pl-k">=</span> travelTimeApi<span class="pl-k">.</span>traveltimeGet(<span class="pl-s"><span class="pl-pds">"</span>51.5258156,-0.08833669999999999<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>51.5094,-0.002124<span class="pl-pds">"</span></span>,
-        <span class="pl-c1">null</span>,
-        <span class="pl-c1">null</span>,
-        <span class="pl-s"><span class="pl-pds">"</span>561b831b3b0cb3a98d9bba92397c7a34<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>body();</pre></div>
+<div class="highlight highlight-source-java"><pre>    <span class="pl-smi">Retrofit</span> retrofit <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ApiClient</span>(<span class="pl-s"><span class="pl-pds">"</span>apikey<span class="pl-pds">"</span></span>, <span class="pl-c1">API_KEY</span>)<span class="pl-k">.</span>getAdapterBuilder()<span class="pl-k">.</span>build();
+    <span class="pl-smi">TravelTimeApi</span> travelTimeApi <span class="pl-k">=</span> retrofit<span class="pl-k">.</span>create(<span class="pl-smi">TravelTimeApi</span><span class="pl-k">.</span>class);
+    <span class="pl-k">final</span> <span class="pl-smi">TravelTime</span> time <span class="pl-k">=</span> travelTimeApi<span class="pl-k">.</span>traveltimeGet(<span class="pl-s"><span class="pl-pds">"</span>51.5258156,-0.08833669999999999<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>51.5094,-0.002124<span class="pl-pds">"</span></span>,
+            <span class="pl-c1">null</span>,
+            <span class="pl-c1">null</span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>body();
+    assertNotNull(time);
+</pre></div>
+
+<p>Travel Time API call example:</p>
+
+<div class="highlight highlight-source-java"><pre>    <span class="pl-smi">Retrofit</span> retrofit <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ApiClient</span>(<span class="pl-s"><span class="pl-pds">"</span>apikey<span class="pl-pds">"</span></span>,<span class="pl-c1">API_KEY</span>)<span class="pl-k">.</span>getAdapterBuilder()<span class="pl-k">.</span>build();
+    <span class="pl-smi">TravelTimeApi</span> travelTimeApi <span class="pl-k">=</span> retrofit<span class="pl-k">.</span>create(<span class="pl-smi">TravelTimeApi</span><span class="pl-k">.</span>class);
+    <span class="pl-k">final</span> <span class="pl-smi">TravelTime</span> time <span class="pl-k">=</span> travelTimeApi<span class="pl-k">.</span>traveltimeGet(<span class="pl-s"><span class="pl-pds">"</span>51.5258156,-0.08833669999999999<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>51.5094,-0.002124<span class="pl-pds">"</span></span>,
+            <span class="pl-c1">null</span>,
+            <span class="pl-c1">null</span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>body();
+</pre></div>
+
+<p>Single Point Coverage API call example:</p>
+
+<div class="highlight highlight-source-java"><pre>    <span class="pl-smi">Retrofit</span> retrofit <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ApiClient</span>(<span class="pl-s"><span class="pl-pds">"</span>apikey<span class="pl-pds">"</span></span>, <span class="pl-c1">API_KEY</span>)<span class="pl-k">.</span>getAdapterBuilder()<span class="pl-k">.</span>build();
+    <span class="pl-smi">CoverageApi</span> coverageApi <span class="pl-k">=</span> retrofit<span class="pl-k">.</span>create(<span class="pl-smi">CoverageApi</span><span class="pl-k">.</span>class);
+    <span class="pl-k">final</span> <span class="pl-smi">Coverage</span> coverage <span class="pl-k">=</span> coverageApi<span class="pl-k">.</span>singlepointcoverageGet(<span class="pl-s"><span class="pl-pds">"</span>51.5258156,-0.08833669999999999<span class="pl-pds">"</span></span>)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>body();</pre></div>
+
+<p>Multiple Point Coverage API call example:</p>
+
+<div class="highlight highlight-source-java"><pre>    <span class="pl-smi">Retrofit</span> retrofit <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ApiClient</span>(<span class="pl-s"><span class="pl-pds">"</span>apikey<span class="pl-pds">"</span></span>,<span class="pl-c1">API_KEY</span>)<span class="pl-k">.</span>getAdapterBuilder()<span class="pl-k">.</span>build();
+    <span class="pl-smi">CoverageApi</span> coverageApi <span class="pl-k">=</span> retrofit<span class="pl-k">.</span>create(<span class="pl-smi">CoverageApi</span><span class="pl-k">.</span>class);
+
+    <span class="pl-smi">Coverage</span> coverage <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Coverage</span>();
+    <span class="pl-k">List&lt;<span class="pl-smi">Point</span>&gt;</span> points <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;<span class="pl-smi">Point</span>&gt;</span>();
+    <span class="pl-smi">Point</span> londonPoint <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Point</span>();
+    londonPoint<span class="pl-k">.</span>setCoord(<span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-c1">51.5072</span>,<span class="pl-c1">0.1275</span>));
+    points<span class="pl-k">.</span>add(londonPoint);
+    <span class="pl-smi">Point</span> pyongyangPoint <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Point</span>();
+    pyongyangPoint<span class="pl-k">.</span>setCoord(<span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-c1">39.0194</span>, <span class="pl-c1">125.7381</span>));
+    pyongyangPoint<span class="pl-k">.</span>setId(<span class="pl-s"><span class="pl-pds">"</span>Pyongyang<span class="pl-pds">"</span></span>);
+    points<span class="pl-k">.</span>add(pyongyangPoint);
+
+    coverage<span class="pl-k">.</span>setPoints(points);
+
+    <span class="pl-k">final</span> <span class="pl-smi">Coverage</span> coverageResult <span class="pl-k">=</span> coverageApi<span class="pl-k">.</span>coveragePost(coverage)<span class="pl-k">.</span>execute()<span class="pl-k">.</span>body();
+</pre></div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/genericmethod/citymapper-api-java">Citymapper-api-java</a> is maintained by <a href="https://github.com/genericmethod">genericmethod</a>.</span>
